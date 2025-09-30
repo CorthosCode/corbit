@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static ru.corthos.corbit.util.Extensions.PDF;
+import static ru.corthos.corbit.util.Extensions.TXT;
+
 @Service
 public class TxtFileConverterService {
 
@@ -26,7 +29,12 @@ public class TxtFileConverterService {
         }
 
         var metaFile = fileUtil.getMetaFile(filePath);
-        Path pdfPath = fileUtil.insertPdfPath(filePath, metaFile.name(), metaFile.extension());
+
+        if (!metaFile.extension().equals(TXT)) {
+            throw new IllegalArgumentException("Файл не с расширением: .TXT");
+        }
+
+        Path pdfPath = fileUtil.createFilePathWithNewExtension(filePath, metaFile.name(), PDF);
         fileUtil.createPDF(pdfPath, metaFile.content());
 
         return pdfPath;

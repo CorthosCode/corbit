@@ -13,11 +13,13 @@ public class BaseFileTest {
 
     protected static FileUtil fileUtil;
     protected static List<Path> createdFiles;
+    protected static Constants constants;
 
     @BeforeAll
     public static void setup() {
         fileUtil = new FileUtil();
         createdFiles = new ArrayList<>();
+        constants = new Constants();
     }
 
     @AfterAll

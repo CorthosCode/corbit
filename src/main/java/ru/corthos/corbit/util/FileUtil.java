@@ -16,14 +16,15 @@ import java.nio.file.Path;
 public class FileUtil {
 
     public MetaFile getMetaFile(Path filePath) throws IOException {
-        var fileName = filePath.getFileName().toString();
-        var fileExtension = fileName.substring(fileName.indexOf(".") + 1);
+        var fileNameWithExtension = filePath.getFileName().toString();
+        var fileName = fileNameWithExtension.substring(0, fileNameWithExtension.indexOf("."));
+        var fileExtension = fileNameWithExtension.substring(fileNameWithExtension.indexOf(".") + 1);
         var fileContent = Files.readString(filePath);
         return new MetaFile(fileName, fileExtension, fileContent);
     }
 
-    public Path insertPdfPath(Path filePath, String fileName, String fileExtension) {
-        var pdfFileName = fileName.replaceFirst("\\." + fileExtension + "$", ".pdf");
+    public Path createFilePathWithNewExtension(Path filePath, String fileName, String fileExtension) {
+        var pdfFileName = String.format("%s.%s", fileName, fileExtension);
         return filePath.getParent().resolve(pdfFileName);
     }
 
