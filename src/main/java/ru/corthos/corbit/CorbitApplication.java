@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class CorbitApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CorbitApplication.class, args);
-	}
+    static void main(String[] args) {
+        SpringApplication.run(CorbitApplication.class, args);
+    }
 
 }
