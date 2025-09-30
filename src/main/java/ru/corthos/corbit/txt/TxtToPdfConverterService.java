@@ -13,12 +13,12 @@ import static ru.corthos.corbit.util.Extensions.PDF;
 import static ru.corthos.corbit.util.Extensions.TXT;
 
 @Service
-public class TxtFileConverterService {
+public class TxtToPdfConverterService {
 
     private final FileUtil fileUtil;
 
     @Autowired
-    public TxtFileConverterService(FileUtil fileUtil) {
+    public TxtToPdfConverterService(FileUtil fileUtil) {
         this.fileUtil = fileUtil;
     }
 

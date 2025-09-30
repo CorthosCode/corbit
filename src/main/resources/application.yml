@@ -1,3 +1,7 @@
 spring:
   application:
     name: "corbit"
+  servlet:
+    multipart:
+      max-file-size: 128KB
+      max-request-size: 128KB

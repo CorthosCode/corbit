@@ -1,7 +1,7 @@
 package ru.corthos.corbit;
 
 import org.junit.jupiter.api.Test;
-import ru.corthos.corbit.txt.MetaFile;
+import ru.corthos.corbit.util.MetaFile;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

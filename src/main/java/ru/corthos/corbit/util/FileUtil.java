@@ -4,7 +4,6 @@ import org.openpdf.text.Document;
 import org.openpdf.text.Paragraph;
 import org.openpdf.text.pdf.PdfWriter;
 import org.springframework.stereotype.Service;
-import ru.corthos.corbit.txt.MetaFile;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
