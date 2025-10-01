@@ -28,12 +28,15 @@ dependencies {
 //	implementation("org.springframework.boot:spring-boot-starter-amqp")
 //	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.github.librepdf:openpdf:3.0.0")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-    implementation("org.apache.tika:tika-core:3.2.3")
-//    implementation("org.apache.tika:tika-parsers-standard-package:3.2.3")
-
 //	implementation("org.springframework.kafka:spring-kafka")
+
+
+    implementation("com.github.librepdf:openpdf:3.0.0")
+    implementation("org.apache.poi:poi-ooxml:5.4.1")
+    implementation("org.apache.tika:tika-core:3.2.3")
+    // implementation("org.apache.tika:tika-parsers-standard-package:3.2.3")
+
 	compileOnly("org.projectlombok:lombok")
 //	runtimeOnly("org.postgresql:postgresql")
 	annotationProcessor("org.projectlombok:lombok")

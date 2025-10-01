@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 @Service
 public class FileUtil {
@@ -18,7 +19,7 @@ public class FileUtil {
         var fileNameWithExtension = filePath.getFileName().toString();
         var fileName = fileNameWithExtension.substring(0, fileNameWithExtension.indexOf("."));
         var fileExtension = fileNameWithExtension.substring(fileNameWithExtension.indexOf(".") + 1);
-        var fileContent = Files.readString(filePath);
+        var fileContent = Files.readAllLines(filePath);
         return new MetaFile(fileName, fileExtension, fileContent);
     }
 
@@ -27,11 +28,13 @@ public class FileUtil {
         return filePath.getParent().resolve(pdfFileName);
     }
 
-    public void createPDF(Path pdfPath, String content) throws FileNotFoundException {
+    public void createPDF(Path pdfPath, List<String> content) throws FileNotFoundException {
         var document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(pdfPath.toFile()));
         document.open();
-        document.add(new Paragraph(content));
+        for (String paragraph : content) {
+            document.add(new Paragraph(paragraph));
+        }
         document.close();
     }
 

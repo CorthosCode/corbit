@@ -1,6 +1,7 @@
 package ru.corthos.corbit;
 
 import java.nio.file.Path;
+import java.util.List;
 
 public class Constants {
     protected final Path pathOfExampleFile = Path.of("files/example.txt");
@@ -9,5 +10,5 @@ public class Constants {
     protected final String fileNameWithExtensionOfExamplePDF = "example.pdf";
     protected final String fileNameOfExample = "example";
     protected final String extensionOfExample = "txt";
-    protected final String contentOfExample = "Hello world from TXT to PDF!";
+    protected final List<String> contentOfExample = List.of("Hello world from TXT to PDF!");
 }

@@ -1,4 +1,6 @@
 package ru.corthos.corbit.util;
 
-public record MetaFile(String name, String extension, String content) {
+import java.util.List;
+
+public record MetaFile(String name, String extension, List<String> content) {
 }
