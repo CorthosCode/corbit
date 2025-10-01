@@ -1,15 +1,18 @@
 package ru.corthos.corbit.util;
 
+import fr.opensagres.poi.xwpf.converter.pdf.PdfConverter;
+import fr.opensagres.poi.xwpf.converter.pdf.PdfOptions;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.openpdf.text.Document;
 import org.openpdf.text.Paragraph;
 import org.openpdf.text.pdf.PdfWriter;
 import org.springframework.stereotype.Service;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,7 +23,26 @@ public class FileUtil {
         var fileName = fileNameWithExtension.substring(0, fileNameWithExtension.indexOf("."));
         var fileExtension = fileNameWithExtension.substring(fileNameWithExtension.indexOf(".") + 1);
         var fileContent = Files.readAllLines(filePath);
-        return new MetaFile(fileName, fileExtension, fileContent);
+        return new MetaFile(fileName, fileExtension, fileContent, null);
+    }
+
+    public MetaFile getMetaFileForDOCX(Path filePath) throws IOException {
+        var fileNameWithExtension = filePath.getFileName().toString();
+        var fileName = fileNameWithExtension.substring(0, fileNameWithExtension.indexOf("."));
+        var fileExtension = fileNameWithExtension.substring(fileNameWithExtension.indexOf(".") + 1);
+
+        List<String> fileContent = new ArrayList<>();
+        XWPFDocument doc;
+
+        try (InputStream fis = Files.newInputStream(filePath)) {
+            doc = new XWPFDocument(fis);
+
+            for (XWPFParagraph para : doc.getParagraphs()) {
+                fileContent.add(para.getText());
+            }
+        }
+
+        return new MetaFile(fileName, fileExtension, fileContent, doc);
     }
 
     public Path createFilePathWithNewExtension(Path filePath, String fileName, String fileExtension) {
@@ -42,4 +64,11 @@ public class FileUtil {
         return Files.deleteIfExists(path);
     }
 
+    public void convertToPDF(Path pdfPath, MetaFile metaFile) throws IOException {
+        PdfOptions pdfOptions = PdfOptions.create();
+        OutputStream out = Files.newOutputStream(pdfPath);
+        PdfConverter.getInstance().convert(metaFile.doc(), out, pdfOptions);
+        metaFile.doc().close();
+        out.close();
+    }
 }

@@ -16,17 +16,18 @@ class FileUtilTest extends BaseFileTest {
         MetaFile actual = new MetaFile(
                 constants.fileNameOfExample,
                 constants.extensionOfExample,
-                constants.contentOfExample
+                constants.contentOfExample,
+                null
         );
-        MetaFile expected = fileUtil.getMetaFile(constants.pathOfExampleFile);
+        MetaFile expected = fileUtil.getMetaFile(constants.pathOfExampleTxtFile);
         assertEquals(actual, expected);
     }
 
     @Test
     void createFilePathWithNewExtension() {
-        Path actual = constants.pathOfExampleFile.getParent();
+        Path actual = constants.pathOfExampleTxtFile.getParent();
         Path pdfPath = fileUtil.createFilePathWithNewExtension(
-                constants.pathOfExampleFile,
+                constants.pathOfExampleTxtFile,
                 constants.fileNameOfExample,
                 constants.extensionOfExample
         );

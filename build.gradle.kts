@@ -34,8 +34,10 @@ dependencies {
 
     implementation("com.github.librepdf:openpdf:3.0.0")
     implementation("org.apache.poi:poi-ooxml:5.4.1")
+    implementation("fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter.docx.xwpf:2.1.0")
     implementation("org.apache.tika:tika-core:3.2.3")
-    // implementation("org.apache.tika:tika-parsers-standard-package:3.2.3")
+
+// implementation("org.apache.tika:tika-parsers-standard-package:3.2.3")
 
 	compileOnly("org.projectlombok:lombok")
 //	runtimeOnly("org.postgresql:postgresql")

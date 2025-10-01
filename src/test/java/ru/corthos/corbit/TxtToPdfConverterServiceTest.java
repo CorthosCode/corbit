@@ -12,7 +12,7 @@ class TxtToPdfConverterServiceTest extends BaseFileTest {
     @Test
     public void convertTxtToPDFTest() throws IOException {
         TxtToPdfConverterService service = new TxtToPdfConverterService(fileUtil);
-        var expected = service.convertTxtToPDF(constants.pathOfExampleFile);
+        var expected = service.convertTxtToPDF(constants.pathOfExampleTxtFile);
         createdFiles.add(expected);
         assertEquals(constants.fileNameWithExtensionOfExamplePDF, expected.getFileName().toString());
     }
