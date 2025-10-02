@@ -7,10 +7,27 @@
 <body>
 <h2>Загрузите TXT файл для преобразования в PDF</h2>
 
-<form method="post" action="/upload" enctype="multipart/form-data">
-    <input type="file" name="file" accept=".txt" required>
+
+<form id="uploadForm" method="post" action="/upload" enctype="multipart/form-data" target="downloadFrame">
+    <input
+            type="file"
+            name="file"
+            accept=".txt,.doc,.docx,.odt,.xls,.xlsx,.ppt,.pptx,.rtf"
+            required>
     <button type="submit">Конвертировать</button>
 </form>
+
+<iframe id="downloadFrame" name="downloadFrame" style="display:none;"></iframe>
+
+
+<!--<form method="post" action="/upload" enctype="multipart/form-data">-->
+<!--    <input-->
+<!--            type="file"-->
+<!--            name="file"-->
+<!--            accept=".txt,.doc,.docx,.odt,.xls,.xlsx,.ppt,.pptx,.rtf"-->
+<!--            required>-->
+<!--    <button type="submit">Конвертировать</button>-->
+<!--</form>-->
 
 </body>
 </html>
