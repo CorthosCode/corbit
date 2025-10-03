@@ -1,4 +1,4 @@
-package ru.corthos.corbit;
+package ru.corthos.corbit.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
