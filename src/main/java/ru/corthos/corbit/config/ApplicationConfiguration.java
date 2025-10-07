@@ -10,6 +10,6 @@ public class ApplicationConfiguration {
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder.rootUri("http://localhost:9090").build();
+        return builder.rootUri("http://jodconverter:8080").build();
     }
 }
