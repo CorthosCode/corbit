@@ -14,3 +14,7 @@ docker run --rm -v $(pwd):/data libreoffice-converter example.docx
 # Докумментация по API
  http://localhost:9090/swagger-ui.html#/
 ```
+
+## Улучшения
+- [x] Разделить сервисы по каталогам
+- [ ] При обрыве соединения от фронта, созданный временный файл не удаляется
