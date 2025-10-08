@@ -24,7 +24,7 @@ public class FileReceiverController {
     @SneakyThrows
     @PostMapping("/upload")
     public ResponseEntity<byte[]> upload(@RequestParam("file") MultipartFile file) {
-        var response = converterService.convert(file);
+        var response = converterService.fastConvert(file);
         return responseFor(response);
     }
 

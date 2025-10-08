@@ -1,6 +1,7 @@
 package ru.corthos.corbit.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,17 @@ public class FileSenderIntegrationService {
         return body;
     }
 
+    protected MultiValueMap<String, Object> createBodyForRequest(MultipartFile file) {
+        try {
+            ByteArrayResource resource = getByteArrayResource(file);
+            MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+            body.add("data", resource);
+            return body;
+        } catch (IOException e) {
+            throw new RuntimeException("Не удалось получить ByteArrayResource из " + file.getName());
+        }
+    }
+
     protected ResponseEntity<byte[]> executeRequest(MultiValueMap<String, Object> body, HttpHeaders headers) {
         return restTemplate.exchange(
                 "/lool/convert-to/pdf",
@@ -62,5 +74,14 @@ public class FileSenderIntegrationService {
         } catch (IOException exception) {
             throw new RuntimeException("Невозможно удалить временный файл из " + tempFile.getFileName());
         }
+    }
+
+    private ByteArrayResource getByteArrayResource(MultipartFile file) throws IOException {
+        return new ByteArrayResource(file.getBytes()) {
+            @Override
+            public String getFilename() {
+                return file.getOriginalFilename();
+            }
+        };
     }
 }

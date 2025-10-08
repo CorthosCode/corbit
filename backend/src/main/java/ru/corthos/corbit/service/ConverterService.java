@@ -15,7 +15,7 @@ public class ConverterService {
         this.fileSenderIntegrationService = fileSenderIntegrationService;
     }
 
-    public ResponseEntity<byte[]> convert(MultipartFile file) {
+    public ResponseEntity<byte[]> cashingConvert(MultipartFile file) {
         var tempFile = fileSenderIntegrationService.createTempFile(file);
 
         var headers = fileSenderIntegrationService.createHeadersForRequest();
@@ -28,6 +28,12 @@ public class ConverterService {
             fileSenderIntegrationService.removeTempFile(tempFile);
         }
 
+    }
+
+    public ResponseEntity<byte[]> fastConvert(MultipartFile file) {
+        var headers = fileSenderIntegrationService.createHeadersForRequest();
+        var body = fileSenderIntegrationService.createBodyForRequest(file);
+        return fileSenderIntegrationService.executeRequest(body, headers);
     }
 
 }

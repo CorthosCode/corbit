@@ -1,4 +1,4 @@
-package ru.corthos.corbit.service;
+package ru.corthos.corbit.unit;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
