@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  jodconverter:
+    image: eugenmayer/jodconverter:rest-0.2.0
+    container_name: jodconverter
+    ports:
+      - "9090:8080"
+
+  backend:
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile
+    ports:
+      - "9091:8080"
+    depends_on:
+      - jodconverter
+
+  frontend:
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    ports:
+      - "9092:5173"
+    depends_on:
+      - backend

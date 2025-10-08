@@ -1,25 +1,18 @@
 version: "3.9"
 services:
-  jodconverter:
-    image: eugenmayer/jodconverter:rest-0.2.0
-    container_name: jodconverter
-    ports:
-      - "9090:8080"
 
-  backend:
+  corbit-auth-basic:
     build:
-      context: ./backend/
+      context: ./corbit-auth/
       dockerfile: Dockerfile
     ports:
-      - "9091:8080"
-    depends_on:
-      - jodconverter
+      - "8080:8080"
 
-  frontend:
+  nginx:
     build:
-      context: ./frontend/
+      context: ./nginx/
       dockerfile: Dockerfile
     ports:
-      - "9092:5173"
+      - "80:80"
     depends_on:
-      - backend
+      - corbit-auth-basic
