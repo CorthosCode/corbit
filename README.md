@@ -2,19 +2,25 @@
 
 ## Запуск LibreOffice в Docker
 ```shell
-docker build -t libreoffice-converter .
+docker build -f Dockerfile-libreoffice -t libreoffice-converter .
 
 docker run --rm -v $(pwd):/data libreoffice-converter example.docx
 ```
 
-## Запуск LibreOffice + java-обертка с пулами
+
+## Jodconverter API (Swagger)
+http://localhost:9090/swagger-ui.html#/
+
+
+## Запуск всего приложения
 ```shell
  docker compose up -d
- 
-# Докумментация по API
- http://localhost:9090/swagger-ui.html#/
 ```
 
-## Улучшения
-- [x] Разделить сервисы по каталогам
-- [x] При обрыве соединения от фронта, созданный временный файл не удаляется
+
+## Где смотреть куда ходить
+Если тип аутентификации указан как basic:
+http://localhost:9094/
+
+Если тип аутентификации указан как session:
+http://localhost:9094/login

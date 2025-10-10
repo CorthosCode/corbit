@@ -2,4 +2,4 @@ spring:
   application:
     name: "corbit-auth"
   profiles:
-    active: "session"
+    active: "${AUTH_PROFILE:session}"
