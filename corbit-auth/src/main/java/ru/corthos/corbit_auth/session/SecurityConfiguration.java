@@ -1,7 +1,8 @@
-package ru.corthos.corbit_auth;
+package ru.corthos.corbit_auth.session;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -11,18 +12,27 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+@Profile("session")
 @Configuration
 public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        var httpBasic = http
-                .authorizeHttpRequests(auth -> auth
+        http
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/login").permitAll()
                         .requestMatchers("/auth").authenticated()
                         .anyRequest().denyAll()
                 )
-                .httpBasic(Customizer.withDefaults());
-        return httpBasic.build();
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("http://localhost:9094/", true)
+                        .permitAll()
+                )
+                .logout(logout -> logout.permitAll()
+                        .logoutSuccessUrl("/login?logout")
+                );
+        return http.build();
     }
 
     @Bean

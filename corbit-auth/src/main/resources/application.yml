@@ -1,3 +1,5 @@
 spring:
   application:
     name: "corbit-auth"
+  profiles:
+    active: "session"

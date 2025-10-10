@@ -18,7 +18,7 @@ services:
   frontend:
     build:
       context: ./frontend/
-      dockerfile: frontend/Dockerfile # Здесь разная реализация может быть
+      dockerfile: Dockerfile
     ports:
       - "9092:8080"
     depends_on:
