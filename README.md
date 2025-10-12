@@ -24,3 +24,39 @@ http://localhost:9094/
 
 Если тип аутентификации указан как session:
 http://localhost:9094/login
+
+
+## Типы аутентификации
+Доступные типы:
+- basic
+- session
+- jwt
+
+Файл для смены типа аутентификации расположен:
+
+`/corbit-auth/Dockerfile`
+
+
+## Если включен тип аутентификации <jwt>
+
+### Запрос на получение токена (делается на сервис аутентификации)
+```shell
+POST /login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+
+curl -v -X POST -H "Content-Type: application/json" -d '{"username":"admin","password":"admin"}' http://localhost:9093/login
+```
+
+### Доступ к защищённому ресурсу
+```shell
+GET /hello
+Authorization: Bearer <токен_из_ответа>
+
+curl -v -X GET -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MDI4NTI0MywiZXhwIjoxNzYwMjg1ODQzfQ.hYTTMsVT_2zBqNEZREcI-B73mSiqrAWZaRjZ0q0dP08" http://localhost:9093/auth
+```
