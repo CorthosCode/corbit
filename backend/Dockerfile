@@ -1,4 +1,4 @@
-FROM gradle:jdk25 AS builder
+FROM gradle:jdk25-alpine AS builder
 
 WORKDIR /gradle-builder
 
@@ -7,7 +7,7 @@ COPY . .
 RUN gradle build -x test --no-daemon
 
 
-FROM openjdk:25-jdk-slim
+FROM eclipse-temurin:25-jre-alpine
 
 WORKDIR /app
 

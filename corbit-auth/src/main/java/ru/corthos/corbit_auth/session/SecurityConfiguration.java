@@ -25,7 +25,7 @@ public class SecurityConfiguration {
                         .anyRequest().denyAll()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")
+
                         .defaultSuccessUrl("http://localhost:9094/", true)
                         .permitAll()
                 )
