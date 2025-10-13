@@ -3,3 +3,11 @@ spring:
     name: "corbit-auth"
   profiles:
     active: "${AUTH_PROFILE:session}"
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: your-client-id
+            client-secret: your-client-secret
+            scope: read:user, user:email
