@@ -24,19 +24,26 @@ services:
     depends_on:
       - backend
 
-  auth-service:
-    build:
-      context: ./corbit-auth/
-      dockerfile: Dockerfile
-    ports:
-      - "9093:8080"
-
   nginx-service:
     build:
       context: ./nginx/
       dockerfile: Dockerfile
     ports:
-      - "9094:80"
+      - "9093:80"
     depends_on:
-      - auth-service
       - frontend
+      - auth-service
+
+  auth-service:
+    build:
+      context: ./corbit-auth/
+      dockerfile: Dockerfile
+    ports:
+      - "9094:8080"
+
+  keycloak-service:
+    build:
+      context: ./keycloak/
+      dockerfile: Dockerfile
+    ports:
+      - "9095:8080"

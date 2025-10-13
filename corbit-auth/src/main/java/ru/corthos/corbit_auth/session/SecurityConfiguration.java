@@ -26,7 +26,7 @@ public class SecurityConfiguration {
                 )
                 .formLogin(form -> form
 
-                        .defaultSuccessUrl("http://localhost:9094/", true)
+                        .defaultSuccessUrl("http://localhost:9093/", true)
                         .permitAll()
                 )
                 .logout(logout -> logout.permitAll()

@@ -20,10 +20,10 @@ http://localhost:9090/swagger-ui.html#/
 
 ## Где смотреть куда ходить
 Если тип аутентификации указан как basic:
-http://localhost:9094/
+http://localhost:9093/
 
 Если тип аутентификации указан как session:
-http://localhost:9094/login
+http://localhost:9093/login
 
 
 ## Типы аутентификации
@@ -31,6 +31,7 @@ http://localhost:9094/login
 - basic
 - session
 - jwt
+- oauth
 
 Файл для смены типа аутентификации расположен:
 
@@ -50,7 +51,7 @@ Content-Type: application/json
 }
 
 
-curl -v -X POST -H "Content-Type: application/json" -d '{"username":"admin","password":"admin"}' http://localhost:9093/login
+curl -v -X POST -H "Content-Type: application/json" -d '{"username":"admin","password":"admin"}' http://localhost:9094/login
 ```
 
 ### Доступ к защищённому ресурсу
@@ -58,5 +59,5 @@ curl -v -X POST -H "Content-Type: application/json" -d '{"username":"admin","pas
 GET /hello
 Authorization: Bearer <токен_из_ответа>
 
-curl -v -X GET -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MDI4NTI0MywiZXhwIjoxNzYwMjg1ODQzfQ.hYTTMsVT_2zBqNEZREcI-B73mSiqrAWZaRjZ0q0dP08" http://localhost:9093/auth
+curl -v -X GET -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MDI4NTI0MywiZXhwIjoxNzYwMjg1ODQzfQ.hYTTMsVT_2zBqNEZREcI-B73mSiqrAWZaRjZ0q0dP08" http://localhost:9094/auth
 ```
