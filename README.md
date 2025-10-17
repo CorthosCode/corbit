@@ -61,3 +61,21 @@ Authorization: Bearer <токен_из_ответа>
 
 curl -v -X GET -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MDI4NTI0MywiZXhwIjoxNzYwMjg1ODQzfQ.hYTTMsVT_2zBqNEZREcI-B73mSiqrAWZaRjZ0q0dP08" http://localhost:9094/auth
 ```
+
+
+## Добавить
+```shell
+cat /etc/hosts
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1	localhost
+255.255.255.255	broadcasthost
+::1             localhost
+
+
+127.0.0.1 nginx-service
+```

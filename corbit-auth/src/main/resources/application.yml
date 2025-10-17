@@ -2,12 +2,22 @@ spring:
   application:
     name: "corbit-auth"
   profiles:
-    active: "${AUTH_PROFILE:session}"
+    active: "${AUTH_PROFILE:keycloak}"
   security:
     oauth2:
       client:
         registration:
-          github:
-            client-id: your-client-id
-            client-secret: your-client-secret
-            scope: read:user, user:email
+          keycloak:
+            client-id: spring-client
+            client-secret: iyBqU3HM4vB9qLbE4hzaQY9xtyHofGRz
+            authorization-grant-type: authorization_code
+            scope: openid, profile, email
+            redirect-uri: "http://localhost:9094/login/oauth2/code/keycloak"
+        provider:
+          keycloak:
+            issuer-uri: http://nginx-service:9095/realms/my-realm
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG

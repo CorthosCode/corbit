@@ -13,7 +13,7 @@ WORKDIR /app
 
 COPY --from=builder /gradle-builder/build/libs/corbit-auth-0.0.1.jar app.jar
 
-ENV AUTH_PROFILE=session
+ENV AUTH_PROFILE=keycloak
 
 EXPOSE 8080
 
