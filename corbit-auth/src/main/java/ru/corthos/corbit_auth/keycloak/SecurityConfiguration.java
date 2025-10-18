@@ -15,11 +15,11 @@ public class SecurityConfiguration {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth", "/profile").authenticated()
+                        .requestMatchers("/auth-page", "/auth", "/profile").authenticated()
                         .anyRequest().denyAll()
                 )
                 .oauth2Login(oauth -> oauth
-                        .defaultSuccessUrl("/auth", true)
+                        .defaultSuccessUrl("/auth-page", true)
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
