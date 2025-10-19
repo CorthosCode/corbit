@@ -423,8 +423,8 @@
       "clientId": "spring-client",
       "name": "",
       "description": "",
-      "rootUrl": "http://localhost:9094",
-      "adminUrl": "http://localhost:9094",
+      "rootUrl": "http://nginx-service:9094",
+      "adminUrl": "http://nginx-service:9094",
       "baseUrl": "",
       "surrogateAuthRequired": false,
       "enabled": true,
@@ -432,7 +432,7 @@
       "clientAuthenticatorType": "client-secret",
       "secret": "iyBqU3HM4vB9qLbE4hzaQY9xtyHofGRz",
       "redirectUris": [
-        "http://localhost:9094/login/oauth2/code/keycloak"
+        "http://nginx-service:9094/login/oauth2/code/keycloak"
       ],
       "webOrigins": [
         "*"

@@ -15,7 +15,8 @@ public class SecurityConfiguration {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth-page", "/auth", "/profile").authenticated()
+                        .requestMatchers("/auth-page", "/profile").authenticated()
+                        .requestMatchers("/auth-check").permitAll()
                         .anyRequest().denyAll()
                 )
                 .oauth2Login(oauth -> oauth

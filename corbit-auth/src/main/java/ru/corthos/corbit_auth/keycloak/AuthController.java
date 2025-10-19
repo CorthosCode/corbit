@@ -23,7 +23,7 @@ public class AuthController {
         return new ResponseEntity<>(headers, HttpStatus.FOUND);
     }
 
-    @GetMapping("/auth")
+    @GetMapping("/auth-check")
     public ResponseEntity<String> auth(Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
             return ResponseEntity.ok().build();
