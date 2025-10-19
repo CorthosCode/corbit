@@ -19,7 +19,7 @@ public class AuthController {
     @GetMapping("/auth-page")
     public ResponseEntity<String> auth() {
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create("http://nginx-service:9093/auth"));
+        headers.setLocation(URI.create("http://nginx-service:9093/"));
         return new ResponseEntity<>(headers, HttpStatus.FOUND);
     }
 
