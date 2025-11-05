@@ -63,9 +63,8 @@ curl -v -X GET -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbi
 ```
 
 
-## Добавить
+## Перед запуском необходимо добавить в `/etc/host` или `C:\Windows\System32\drivers\etc\hosts`
 ```shell
-cat /etc/hosts
 ##
 # Host Database
 #
@@ -79,3 +78,7 @@ cat /etc/hosts
 
 127.0.0.1 nginx-service
 ```
+
+## Запуск
+1. На http://nginx-service:9095 создаем пользователя.
+2. На http://nginx-service:9093 основное приложение. Логинимся и пользуемся.
