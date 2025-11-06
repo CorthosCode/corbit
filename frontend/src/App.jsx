@@ -51,7 +51,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
       <div className="bg-white/20 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/30 p-8 w-full max-w-md">
-      <img src="/src/img/corbit.png" alt="Corbit Logo" className="w-40 max-w-xs mx-auto "/>
+      <img src="/img/corbit.png" alt="Corbit Logo" className="w-40 max-w-xs mx-auto "/>
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">
             PDF-конвертер
