@@ -1,5 +1,6 @@
 version: "3.9"
 services:
+
   jodconverter:
     image: eugenmayer/jodconverter:rest-0.2.0
     container_name: jodconverter
@@ -40,6 +41,14 @@ services:
     build:
       context: ./corbit-auth/
       dockerfile: Dockerfile
+    environment:
+      - KEYCLOAK_CLIENTID=spring-client
+      - KEYCLOAK_CLIENTSECRET=iyBqU3HM4vB9qLbE4hzaQY9xtyHofGRz
+      - KEYCLOAK_AUTHORIZATIONGRANTTYPE=authorization_code
+      - KEYCLOAK_SCOPE=openid,profile,email
+      - KEYCLOAK_REDIRECTURI=http://nginx-service:9094/login/oauth2/code/keycloak
+      - KEYCLOAK_ISSUERURI=http://nginx-service:9095/realms/my-realm
+
 
   keycloak-service:
     build:

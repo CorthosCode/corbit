@@ -1,37 +1,21 @@
 spring:
   application:
     name: "corbit-auth"
-  profiles:
-    active: "${AUTH_PROFILE:keycloak}"
   security:
     oauth2:
       client:
         registration:
           keycloak:
-            client-id: spring-client
-            client-secret: iyBqU3HM4vB9qLbE4hzaQY9xtyHofGRz
-            authorization-grant-type: authorization_code
-            scope: openid, profile, email
-            redirect-uri: "http://nginx-service:9094/login/oauth2/code/keycloak"
+            client-id: "${KEYCLOAK_CLIENTID:keycloak}"
+            client-secret: "${KEYCLOAK_CLIENTSECRET:keycloak}"
+            authorization-grant-type: "${KEYCLOAK_AUTHORIZATIONGRANTTYPE:keycloak}"
+            scope: "${KEYCLOAK_SCOPE:keycloak}"
+            redirect-uri: "${KEYCLOAK_REDIRECTURI:keycloak}"
         provider:
           keycloak:
-            issuer-uri: http://nginx-service:9095/realms/my-realm
+            issuer-uri: "${KEYCLOAK_ISSUERURI:keycloak}"
 
 logging:
   level:
-    # Основные компоненты OAuth2 Login
-    org.springframework.security.oauth2.client.web: TRACE
-    org.springframework.security.oauth2.client.endpoint: TRACE
-    org.springframework.security.oauth2.core.web: TRACE
-    org.springframework.security.oauth2.client.authentication: TRACE
-    org.springframework.security.oauth2.core.endpoint: TRACE
-    # Конкретный фильтр, обрабатывающий код
-    org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter: TRACE
-    # Провайдер аутентификации по коду
-    org.springframework.security.oauth2.client.authentication.OAuth2AuthorizationCodeAuthenticationProvider: TRACE
-    # Компонент, отвечающий за обмен кода (для сравнения, когда он логирует)
-    org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient: TRACE
-    # Репозиторий для хранения/восстановления запроса (включая state)
-    org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository: TRACE
-    # Общий OAuth2 фильтр
-    org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter: TRACE
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
