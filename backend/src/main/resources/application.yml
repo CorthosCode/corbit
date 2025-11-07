@@ -1,6 +1,8 @@
 spring:
   application:
     name: "corbit"
+  profiles:
+    active: gotenberg
   servlet:
     multipart:
       max-file-size: 5MB
@@ -9,3 +11,21 @@ spring:
 logging:
   level:
     org.springframework.web: DEBUG
+
+---
+spring:
+  config:
+    activate:
+      on-profile: gotenberg
+converter:
+  service:
+    base-url: http://converter-service:3000
+
+---
+spring:
+  config:
+    activate:
+      on-profile: jodconverter
+converter:
+  service:
+    base-url: http://converter-service:8080

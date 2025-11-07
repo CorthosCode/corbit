@@ -9,10 +9,11 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
+import ru.corthos.corbit.service.ConverterService;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -32,7 +33,7 @@ class FileSenderIntegrationServiceTest {
 
     @Test
     void createTempFile() {
-        var multipartFile = createMultipartFile("content");
+        var multipartFile = createMultipartFile();
         var tempFile = senderIntegrationWrapper.createTempFile(multipartFile);
         assertTrue(Files.exists(tempFile));
     }
@@ -40,7 +41,7 @@ class FileSenderIntegrationServiceTest {
     @Test
     void createAndRemoveTempFile() throws IOException {
         var content = "content";
-        var multipartFile = createMultipartFile(content);
+        var multipartFile = createMultipartFile();
         var tempFile = senderIntegrationWrapper.createTempFile(multipartFile);
         assertTrue(Files.exists(tempFile));
         assertEquals(content, Files.readString(tempFile));
@@ -53,31 +54,52 @@ class FileSenderIntegrationServiceTest {
         var headers = senderIntegrationWrapper.createHeadersForRequest();
         assertEquals(1, headers.size());
         assertEquals(MediaType.MULTIPART_FORM_DATA, headers.getContentType());
-        executeRequest();
     }
 
     @Test
     void createBodyForRequest() {
+        var key = "data";
         var tempFile = Mockito.mock(Path.class);
-        var result = senderIntegrationWrapper.createBodyForRequest(tempFile);
-        assertEquals(List.of(new FileSystemResource(tempFile)), result.get("data"));
+        var result = senderIntegrationWrapper.createBodyForRequest(tempFile, key);
+        assertEquals(List.of(new FileSystemResource(tempFile)), result.get(key));
     }
 
     @Test
     void executeRequest() {
-        var multipartFile = createMultipartFile("content");
+        var path = "/lool/convert-to/pdf";
+        var key = "data";
+        var multipartFile = createMultipartFile();
         var tempFile = senderIntegrationWrapper.createTempFile(multipartFile);
-        var body = senderIntegrationWrapper.createBodyForRequest(tempFile);
+        var body = senderIntegrationWrapper.createBodyForRequest(tempFile, key);
         var httpHeaders = senderIntegrationWrapper.createHeadersForRequest();
-        senderIntegrationWrapper.executeRequest(body, httpHeaders);
+        senderIntegrationWrapper.executeRequest(body, httpHeaders, path);
         Mockito
                 .verify(restTemplate)
                 .exchange(
-                        "/lool/convert-to/pdf",
+                        path,
                         HttpMethod.POST,
                         new HttpEntity<>(body, httpHeaders),
                         byte[].class
                 );
+    }
+
+    @Test
+    void givenLongRequest_whenException_thenRemoveTempFile() {
+        var multipartFile = createMultipartFile();
+
+        var path = Path.of("testPath");
+        var converterService = new ConverterService(senderIntegrationWrapper);
+        var senderIntegrationWrapper = Mockito.mock(FileSenderIntegrationWrapper.class);
+        Mockito.when(senderIntegrationWrapper.createTempFile(multipartFile)).thenReturn(path);
+        Mockito.when(senderIntegrationWrapper.convert(multipartFile)).thenThrow(new ResourceAccessException("HTTP connect timed out"));
+
+        try {
+            converterService.cashingConvert(multipartFile);
+        } catch (Exception e) {
+            assertInstanceOf(ResourceAccessException.class, e);
+            assertTrue(e.getMessage().contains("HTTP connect timed out"));
+            assertFalse(Files.exists(path));
+        }
     }
 
     @AfterAll
@@ -85,8 +107,8 @@ class FileSenderIntegrationServiceTest {
         senderIntegrationWrapper.cleanup();
     }
 
-    private MockMultipartFile createMultipartFile(String content) {
-        return new MockMultipartFile("test", content.getBytes(StandardCharsets.UTF_8));
+    private MockMultipartFile createMultipartFile() {
+        return new MockMultipartFile("file", "test.txt", "text/plain", "content".getBytes());
     }
 
 }

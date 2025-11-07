@@ -13,7 +13,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.corthos.corbit.service.ConverterService;
 import ru.corthos.corbit.unit.FileSenderIntegrationWrapper;
 
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
@@ -25,19 +24,22 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ConverterServiceTest {
 
+    private static final String EUGENMAYER_JODCONVERTER_REST_0_2_0 = "eugenmayer/jodconverter:rest-0.2.0";
+    private static final String GOTENBERG_GOTENBERG_8 = "gotenberg/gotenberg:8";
+
     @Container
     private static final GenericContainer<?> jodconverter =
-            new GenericContainer<>("eugenmayer/jodconverter:rest-0.2.0")
-                    .withExposedPorts(8080);
+            new GenericContainer<>(GOTENBERG_GOTENBERG_8)
+                    .withExposedPorts(3000);
 
     private ConverterService converterService;
 
     @BeforeAll
     void setUp() {
-        var jodconverterBaseUrl = "http://" + jodconverter.getHost() + ":" + jodconverter.getMappedPort(8080);
+        var baseUrl = "http://" + jodconverter.getHost() + ":" + jodconverter.getMappedPort(3000);
 
         var restTemplate = new RestTemplateBuilder()
-                .rootUri(jodconverterBaseUrl)
+                .rootUri(baseUrl)
                 .connectTimeout(Duration.of(2, ChronoUnit.SECONDS))  // 2 секунд на подключение
                 .readTimeout(Duration.of(3, ChronoUnit.SECONDS))    // 3 секунд на ожидание ответа
                 .build();
@@ -64,7 +66,7 @@ class ConverterServiceTest {
     }
 
     private MockMultipartFile createMultipartFile() {
-        return new MockMultipartFile("test.txt", "content".getBytes(StandardCharsets.UTF_8));
+        return new MockMultipartFile("file", "test.txt", "text/plain", "content".getBytes());
     }
 
 }
