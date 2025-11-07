@@ -82,3 +82,13 @@ curl -v -X GET -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbi
 ## Запуск
 1. На http://nginx-service:9095 создаем пользователя.
 2. На http://nginx-service:9093 основное приложение. Логинимся и пользуемся.
+
+
+## Health-check у Keycloak-service
+> `exec 3<>/dev/tcp/localhost/9000` - это bash-специфичный способ открыть TCP-соединение с локальным хостом на порт 9000 (где работает Keycloak). Файловый дескриптор 3 открывается для чтения и записи.
+
+> `echo -e 'GET /health/ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3` - отправляет HTTP-запрос типа GET на путь `/health/ready` через открытое соединение (дескриптор 3). Символы `\r\n` - обязательные для HTTP-запроса переносы строки.
+
+> `head -n 1 <&3` - читает первую строку ответа сервера (обычно это статус HTTP ответа, например, "HTTP/1.1 200 OK").
+
+> `grep -q '200 OK'` - проверяет, содержит ли эта строка подстроку "200 OK", что означает успешный ответ HTTP.

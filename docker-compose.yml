@@ -1,18 +1,17 @@
 version: "3.9"
 services:
 
-#  converter-service:
-#    image: eugenmayer/jodconverter:rest-0.2.0
-#    container_name: converter-service
-#    ports:
-#      - "9090:8080"
+  #  converter-service:
+  #    image: eugenmayer/jodconverter:rest-0.2.0
+  #    container_name: converter-service
+  #    ports:
+  #      - "9090:8080"
 
   converter-service:
     image: gotenberg/gotenberg:8
     container_name: converter-service
     ports:
       - "9090:3000"
-
 
   backend:
     build:
@@ -32,17 +31,15 @@ services:
     depends_on:
       - backend
 
-  nginx-service:
+  keycloak-service:
     build:
-      context: ./nginx/
+      context: ./keycloak/
       dockerfile: Dockerfile
-    ports:
-      - "9093:9093"
-      - "9094:9094"
-      - "9095:9095"
-    depends_on:
-      - frontend
-      - auth-service
+    healthcheck:
+      test: [ "CMD-SHELL", "exec 3<>/dev/tcp/localhost/9000; echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3; head -n 1 <&3 | grep -q '200 OK'" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   auth-service:
     build:
@@ -55,9 +52,18 @@ services:
       - KEYCLOAK_SCOPE=openid,profile,email
       - KEYCLOAK_REDIRECTURI=http://nginx-service:9094/login/oauth2/code/keycloak
       - KEYCLOAK_ISSUERURI=http://nginx-service:9095/realms/my-realm
+    depends_on:
+      keycloak-service:
+        condition: service_healthy
 
-
-  keycloak-service:
+  nginx-service:
     build:
-      context: ./keycloak/
+      context: ./nginx/
       dockerfile: Dockerfile
+    ports:
+      - "9093:9093"
+      - "9094:9094"
+      - "9095:9095"
+    depends_on:
+      - frontend
+      - auth-service
