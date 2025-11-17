@@ -11,7 +11,7 @@ FROM eclipse-temurin:25-jre-alpine
 
 WORKDIR /app
 
-COPY --from=builder /gradle-builder/build/libs/corbit-auth-0.0.1.jar app.jar
+COPY --from=builder /gradle-builder/build/libs/auth-service-0.0.1.jar app.jar
 
 ENV AUTH_PROFILE=keycloak
 

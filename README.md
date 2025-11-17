@@ -92,3 +92,6 @@ curl -v -X GET -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbi
 > `head -n 1 <&3` - читает первую строку ответа сервера (обычно это статус HTTP ответа, например, "HTTP/1.1 200 OK").
 
 > `grep -q '200 OK'` - проверяет, содержит ли эта строка подстроку "200 OK", что означает успешный ответ HTTP.
+
+
+PowerShell -file services-speed-test.ps1

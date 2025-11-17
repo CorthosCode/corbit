@@ -1,6 +1,6 @@
 spring:
   application:
-    name: "corbit-auth"
+    name: "auth-service"
   security:
     oauth2:
       client:

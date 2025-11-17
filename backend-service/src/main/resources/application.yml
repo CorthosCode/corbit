@@ -1,6 +1,6 @@
 spring:
   application:
-    name: "corbit"
+    name: "backend-service"
   profiles:
     active: gotenberg
   servlet:
