@@ -5,11 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockMultipartFile;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import ru.corthos.corbit.MultipartFileUtil;
 import ru.corthos.corbit.service.ConverterService;
 import ru.corthos.corbit.unit.FileSenderIntegrationWrapper;
 
@@ -28,7 +27,7 @@ class ConverterServiceTest {
     private static final String GOTENBERG_GOTENBERG_8 = "gotenberg/gotenberg:8";
 
     @Container
-    private static final GenericContainer<?> jodconverter =
+    private static final GenericContainer<?> converterContainer =
             new GenericContainer<>(GOTENBERG_GOTENBERG_8)
                     .withExposedPorts(3000);
 
@@ -36,7 +35,7 @@ class ConverterServiceTest {
 
     @BeforeAll
     void setUp() {
-        var baseUrl = "http://" + jodconverter.getHost() + ":" + jodconverter.getMappedPort(3000);
+        var baseUrl = "http://" + converterContainer.getHost() + ":" + converterContainer.getMappedPort(3000);
 
         var restTemplate = new RestTemplateBuilder()
                 .rootUri(baseUrl)
@@ -50,23 +49,18 @@ class ConverterServiceTest {
 
     @Test
     void cashingConvert() {
-        var multipartFile = createMultipartFile();
-        ResponseEntity<byte[]> response = converterService.cashingConvert(multipartFile);
+        var multipartFile = MultipartFileUtil.getMultipartFile();
+        var response = converterService.cashingConvert(multipartFile);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
     }
 
     @Test
     void fastConvert() {
-        // TODO что-то ломается когда запускаем разом и юнит и итеграционные в этом тесте
-        var multipartFile = createMultipartFile();
-        ResponseEntity<byte[]> response = converterService.fastConvert(multipartFile);
+        var multipartFile = MultipartFileUtil.getMultipartFile();
+        var response = converterService.fastConvert(multipartFile);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-    }
-
-    private MockMultipartFile createMultipartFile() {
-        return new MockMultipartFile("file", "test.txt", "text/plain", "content".getBytes());
     }
 
 }

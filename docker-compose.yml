@@ -16,6 +16,9 @@ services:
     build:
       context: ./backend-service/
       dockerfile: Dockerfile
+    environment:
+      - BACKEND-SERVICE-FILE-SIZE=5MB
+      - BACKEND-SERVICE-MAX-REQUEST-SIZE=5MB
     ports:
       - "9091:8080"
     depends_on:

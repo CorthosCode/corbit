@@ -1,12 +1,12 @@
 package ru.corthos.corbit.unit;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import ru.corthos.corbit.service.converter.BaseConverterImpl;
-import ru.corthos.corbit.service.gotenberg.FileSenderIntegrationService;
+import ru.corthos.corbit.service.converter.BaseConverterIntegrationImpl;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,21 +14,20 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileSenderIntegrationWrapper extends BaseConverterImpl {
+public class FileSenderIntegrationWrapper extends BaseConverterIntegrationImpl {
 
     private final List<Path> pathList = new ArrayList<>();
 
-    private final FileSenderIntegrationService gotenberg;
-
     public FileSenderIntegrationWrapper(RestTemplate restTemplate) {
         super(restTemplate);
-        gotenberg = new FileSenderIntegrationService(restTemplate);
-        // TODO Если есть другой сервис, надо уметь между ними переключаться
     }
 
     @Override
     public ResponseEntity<byte[]> convert(MultipartFile file) {
-        return gotenberg.convert(file);
+        var mockPdfContent = "PDF content".getBytes();
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(mockPdfContent);
     }
 
     @Override
@@ -61,6 +60,11 @@ public class FileSenderIntegrationWrapper extends BaseConverterImpl {
     @Override
     protected ResponseEntity<byte[]> executeRequest(MultiValueMap<String, Object> body, HttpHeaders headers, String path) {
         return super.executeRequest(body, headers, path);
+    }
+
+    @Override
+    protected ResponseEntity<byte[]> executeRequest(MultipartFile file, String path, String key) {
+        return super.executeRequest(file, path, key);
     }
 
     public void cleanup() {

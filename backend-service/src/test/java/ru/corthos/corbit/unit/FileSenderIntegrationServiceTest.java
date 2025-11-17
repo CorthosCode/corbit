@@ -8,9 +8,9 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
+import ru.corthos.corbit.MultipartFileUtil;
 import ru.corthos.corbit.service.ConverterService;
 
 import java.io.IOException;
@@ -22,8 +22,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FileSenderIntegrationServiceTest {
 
-    protected static FileSenderIntegrationWrapper senderIntegrationWrapper;
-    protected static RestTemplate restTemplate;
+    private static RestTemplate restTemplate;
+    private static FileSenderIntegrationWrapper senderIntegrationWrapper;
 
     @BeforeAll
     public static void setup() {
@@ -33,7 +33,7 @@ class FileSenderIntegrationServiceTest {
 
     @Test
     void createTempFile() {
-        var multipartFile = createMultipartFile();
+        var multipartFile = MultipartFileUtil.getMultipartFile();
         var tempFile = senderIntegrationWrapper.createTempFile(multipartFile);
         assertTrue(Files.exists(tempFile));
     }
@@ -41,7 +41,7 @@ class FileSenderIntegrationServiceTest {
     @Test
     void createAndRemoveTempFile() throws IOException {
         var content = "content";
-        var multipartFile = createMultipartFile();
+        var multipartFile = MultipartFileUtil.getMultipartFile();
         var tempFile = senderIntegrationWrapper.createTempFile(multipartFile);
         assertTrue(Files.exists(tempFile));
         assertEquals(content, Files.readString(tempFile));
@@ -51,9 +51,9 @@ class FileSenderIntegrationServiceTest {
 
     @Test
     void createHeadersForRequest() {
-        var headers = senderIntegrationWrapper.createHeadersForRequest();
-        assertEquals(1, headers.size());
-        assertEquals(MediaType.MULTIPART_FORM_DATA, headers.getContentType());
+        var httpHeaders = senderIntegrationWrapper.createHeadersForRequest();
+        assertEquals(1, httpHeaders.size());
+        assertEquals(MediaType.MULTIPART_FORM_DATA, httpHeaders.getContentType());
     }
 
     @Test
@@ -66,9 +66,9 @@ class FileSenderIntegrationServiceTest {
 
     @Test
     void executeRequest() {
-        var path = "/lool/convert-to/pdf";
-        var key = "data";
-        var multipartFile = createMultipartFile();
+        var path = "/yourPath";
+        var key = "yourKey";
+        var multipartFile = MultipartFileUtil.getMultipartFile();
         var tempFile = senderIntegrationWrapper.createTempFile(multipartFile);
         var body = senderIntegrationWrapper.createBodyForRequest(tempFile, key);
         var httpHeaders = senderIntegrationWrapper.createHeadersForRequest();
@@ -85,8 +85,7 @@ class FileSenderIntegrationServiceTest {
 
     @Test
     void givenLongRequest_whenException_thenRemoveTempFile() {
-        var multipartFile = createMultipartFile();
-
+        var multipartFile = MultipartFileUtil.getMultipartFile();
         var path = Path.of("testPath");
         var converterService = new ConverterService(senderIntegrationWrapper);
         var senderIntegrationWrapper = Mockito.mock(FileSenderIntegrationWrapper.class);
@@ -105,10 +104,6 @@ class FileSenderIntegrationServiceTest {
     @AfterAll
     public static void cleanup() {
         senderIntegrationWrapper.cleanup();
-    }
-
-    private MockMultipartFile createMultipartFile() {
-        return new MockMultipartFile("file", "test.txt", "text/plain", "content".getBytes());
     }
 
 }

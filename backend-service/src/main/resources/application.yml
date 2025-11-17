@@ -5,8 +5,8 @@ spring:
     active: gotenberg
   servlet:
     multipart:
-      max-file-size: 5MB
-      max-request-size: 5MB
+      max-file-size: "${BACKEND-SERVICE-FILE-SIZE:5MB}"
+      max-request-size: "${BACKEND-SERVICE-MAX-REQUEST-SIZE:5MB}"
 
 logging:
   level:

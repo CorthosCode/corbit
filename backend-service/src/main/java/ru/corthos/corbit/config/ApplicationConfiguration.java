@@ -12,9 +12,6 @@ import java.time.temporal.ChronoUnit;
 @Configuration
 public class ApplicationConfiguration {
 
-
-    private String activeProfile;
-
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder,
                                      @Value("${converter.service.base-url}") String converterBaseUrl) {
