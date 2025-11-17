@@ -7,6 +7,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 import ru.corthos.corbit.MultipartFileUtil;
+import ru.corthos.corbit.service.converter.gotenberg.FileConverterService;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.eq;
@@ -29,7 +30,7 @@ public class FileConverterServiceTest {
         var multipartFile = MultipartFileUtil.getMultipartFile();
         var body = senderIntegrationWrapper.createBodyForRequest(multipartFile, key);
         var httpHeaders = senderIntegrationWrapper.createHeadersForRequest();
-        var converterService = new ru.corthos.corbit.service.gotenberg.FileConverterService(restTemplate);
+        var converterService = new FileConverterService(restTemplate);
         var response = converterService.convert(multipartFile);
 
         Mockito
@@ -52,7 +53,7 @@ public class FileConverterServiceTest {
         var multipartFile = MultipartFileUtil.getMultipartFile();
         var body = senderIntegrationWrapper.createBodyForRequest(multipartFile, key);
         var httpHeaders = senderIntegrationWrapper.createHeadersForRequest();
-        var converterService = new ru.corthos.corbit.service.jodconverter.FileConverterService(restTemplate);
+        var converterService = new ru.corthos.corbit.service.converter.jodconverter.FileConverterService(restTemplate);
         var response = converterService.convert(multipartFile);
 
         Mockito

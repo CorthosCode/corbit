@@ -1,10 +1,9 @@
-package ru.corthos.corbit.service;
+package ru.corthos.corbit.service.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import ru.corthos.corbit.service.converter.ConvertingToPDF;
 
 @Service
 public class ConverterService {

@@ -9,7 +9,7 @@ import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.corthos.corbit.MultipartFileUtil;
-import ru.corthos.corbit.service.ConverterService;
+import ru.corthos.corbit.service.converter.ConverterService;
 import ru.corthos.corbit.unit.FileSenderIntegrationWrapper;
 
 import java.time.Duration;

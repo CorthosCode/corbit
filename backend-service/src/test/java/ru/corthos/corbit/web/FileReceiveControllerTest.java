@@ -10,7 +10,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.corthos.corbit.MultipartFileUtil;
 import ru.corthos.corbit.controller.FileReceiveController;
-import ru.corthos.corbit.service.ConverterService;
+import ru.corthos.corbit.service.converter.ConverterService;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
