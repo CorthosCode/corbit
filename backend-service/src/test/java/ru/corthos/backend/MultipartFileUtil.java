@@ -1,4 +1,4 @@
-package ru.corthos.corbit;
+package ru.corthos.backend;
 
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;

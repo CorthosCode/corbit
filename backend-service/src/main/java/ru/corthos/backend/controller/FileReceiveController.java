@@ -1,4 +1,4 @@
-package ru.corthos.corbit.controller;
+package ru.corthos.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import ru.corthos.corbit.service.converter.ConverterService;
+import ru.corthos.backend.service.converter.ConverterService;
 
 @RestController
 public class FileReceiveController {

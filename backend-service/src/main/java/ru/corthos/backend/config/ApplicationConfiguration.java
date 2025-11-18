@@ -1,4 +1,4 @@
-package ru.corthos.corbit.config;
+package ru.corthos.backend.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;

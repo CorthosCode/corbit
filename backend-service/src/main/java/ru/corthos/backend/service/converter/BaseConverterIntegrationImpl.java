@@ -1,4 +1,4 @@
-package ru.corthos.corbit.service.converter;
+package ru.corthos.backend.service.converter;
 
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;

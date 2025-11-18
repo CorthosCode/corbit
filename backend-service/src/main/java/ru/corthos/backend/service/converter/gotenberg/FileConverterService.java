@@ -1,4 +1,4 @@
-package ru.corthos.corbit.service.converter.gotenberg;
+package ru.corthos.backend.service.converter.gotenberg;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import ru.corthos.corbit.service.converter.BaseConverterIntegrationImpl;
+import ru.corthos.backend.service.converter.BaseConverterIntegrationImpl;
 
 @Slf4j
 @Profile("gotenberg")

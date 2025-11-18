@@ -1,4 +1,4 @@
-package ru.corthos.corbit_auth;
+package ru.corthos.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

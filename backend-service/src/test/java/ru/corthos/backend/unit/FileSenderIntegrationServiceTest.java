@@ -1,4 +1,4 @@
-package ru.corthos.corbit.unit;
+package ru.corthos.backend.unit;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -10,8 +10,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
-import ru.corthos.corbit.MultipartFileUtil;
-import ru.corthos.corbit.service.converter.ConverterService;
+import ru.corthos.backend.MultipartFileUtil;
+import ru.corthos.backend.service.converter.ConverterService;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,4 +1,4 @@
-package ru.corthos.corbit_auth.keycloak;
+package ru.corthos.auth.keycloak;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

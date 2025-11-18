@@ -1,4 +1,4 @@
-package ru.corthos.corbit.web;
+package ru.corthos.backend.web;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.corthos.corbit.MultipartFileUtil;
-import ru.corthos.corbit.controller.FileReceiveController;
-import ru.corthos.corbit.service.converter.ConverterService;
+import ru.corthos.backend.MultipartFileUtil;
+import ru.corthos.backend.controller.FileReceiveController;
+import ru.corthos.backend.service.converter.ConverterService;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

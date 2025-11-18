@@ -1,4 +1,4 @@
-package ru.corthos.corbit.service.converter;
+package ru.corthos.backend.service.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

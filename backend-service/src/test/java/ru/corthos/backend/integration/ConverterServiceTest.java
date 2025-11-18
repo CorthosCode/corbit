@@ -1,4 +1,4 @@
-package ru.corthos.corbit.integration;
+package ru.corthos.backend.integration;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -8,9 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import ru.corthos.corbit.MultipartFileUtil;
-import ru.corthos.corbit.service.converter.ConverterService;
-import ru.corthos.corbit.unit.FileSenderIntegrationWrapper;
+import ru.corthos.backend.MultipartFileUtil;
+import ru.corthos.backend.service.converter.ConverterService;
+import ru.corthos.backend.unit.FileSenderIntegrationWrapper;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;

@@ -1,4 +1,4 @@
-package ru.corthos.corbit.unit;
+package ru.corthos.backend.unit;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import ru.corthos.corbit.service.converter.BaseConverterIntegrationImpl;
+import ru.corthos.backend.service.converter.BaseConverterIntegrationImpl;
 
 import java.io.IOException;
 import java.nio.file.Files;
