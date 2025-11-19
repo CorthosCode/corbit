@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: "auth-service"
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: "${KEYCLOAK_CLIENTID:keycloak}"
+            client-secret: "${KEYCLOAK_CLIENTSECRET:keycloak}"
+            authorization-grant-type: "${KEYCLOAK_AUTHORIZATIONGRANTTYPE:keycloak}"
+            scope: "${KEYCLOAK_SCOPE:keycloak}"
+            redirect-uri: "${KEYCLOAK_REDIRECTURI:keycloak}"
+        provider:
+          keycloak:
+            issuer-uri: "${KEYCLOAK_ISSUERURI:keycloak}"

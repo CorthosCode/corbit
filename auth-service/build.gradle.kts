@@ -6,7 +6,7 @@ plugins {
 
 group = "ru.corthos"
 version = "0.0.1"
-description = "corbit-auth - is a service for auth"
+description = "auth-service - is a service for auth"
 
 java {
 	toolchain {
@@ -46,7 +46,7 @@ tasks.withType<Test> {
 
 tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
     enabled = true
-    mainClass.set("ru.corthos.corbit_auth.CorbitAuthApplication")
+    mainClass.set("ru.corthos.auth.CorbitAuthApplication")
 }
 
 tasks.named<Jar>("jar") {

@@ -6,7 +6,7 @@ plugins {
 
 group = "ru.corthos"
 version = "0.0.1"
-description = "Corbit is a PDF converter project"
+description = "backend-service is a service for integration with PDF converter"
 
 java {
 	toolchain {
@@ -57,7 +57,7 @@ tasks.withType<Test> {
 
 tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
     enabled = true
-    mainClass.set("ru.corthos.corbit.CorbitApplication")
+    mainClass.set("ru.corthos.backend.CorbitApplication")
 }
 
 tasks.named<Jar>("jar") {
