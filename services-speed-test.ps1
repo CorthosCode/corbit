@@ -4,9 +4,6 @@ docker-compose down
 # Получаем список сервисов из docker-compose.yml
 $services = docker-compose config --services
 
-# Запускаем все сервисы
-docker-compose up -d
-
 # Функция для получения времени в миллисекундах
 function Get-Timestamp {
     $unixEpoch = [DateTimeOffset]::new(1970,1,1,0,0,0,[TimeSpan]::Zero)
@@ -16,7 +13,10 @@ function Get-Timestamp {
 }
 
 # Засекаем общее время старта
-$startAll = Get-Timestamp
+$startGlobal = Get-Timestamp
+
+# Запускаем все сервисы
+docker-compose up -d
 
 # Хеш-таблица для хранения времен старта сервисов
 $startTimes = @{}
@@ -41,10 +41,15 @@ foreach ($service in $services) {
         Start-Sleep -Milliseconds 100
     }
     $endTime = Get-Timestamp
-    $startTimes[$service] = $endTime - $startAll
+    $startTimes[$service] = $endTime - $startGlobal
 }
+
+# Засекаем общее время окончания
+$endGlobal = Get-Timestamp
 
 Write-Output "Service startup time (ms):"
 foreach ($key in $startTimes.Keys) {
-    Write-Output "$key : $($startTimes[$key])"
+    Write-Output "$key : $($startTimes[$key]) (ms) -> $($startTimes[$key] / 1000) (sec)"
 }
+Write-Output "------------------------------"
+Write-Output "Total: $($endGlobal - $startGlobal) (ms) -> $(($endGlobal - $startGlobal) / 1000) (sec)"
