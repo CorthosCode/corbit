@@ -1,70 +1,40 @@
 # Corbit
 
-## Запуск LibreOffice в Docker
-```shell
-docker build -f Dockerfile-libreoffice -t libreoffice-converter .
+---
 
-docker run --rm -v $(pwd):/data libreoffice-converter example.docx
-```
+![corbit](/resources/corbit-app.png)
 
+Песочница в виде PDF-конвертера. Все сервисы, составляющие приложение, завернуты в lightweight-docker-образы. Конвертируются все популярные расширения в PDF (без обратного функционала).
 
-## Jodconverter API (Swagger)
-http://localhost:9090/swagger-ui.html#/
+---
 
+## Использование
 
-## Запуск всего приложения
+Запуск приложения в Docker (требуется предварительный запуск docker-daemon).
+
 ```shell
  docker compose up -d
 ```
 
+Запуск приложения с замером скорости запуска (по каждому сервису).
 
-## Где смотреть куда ходить
-Если тип аутентификации указан как basic:
-http://localhost:9093/
-
-Если тип аутентификации указан как session:
-http://localhost:9093/login
-
-
-## Типы аутентификации
-Доступные типы:
-- basic
-- session
-- jwt
-- oauth
-
-Файл для смены типа аутентификации расположен:
-
-`/corbit-auth/Dockerfile`
-
-
-## Если включен тип аутентификации <jwt>
-
-### Запрос на получение токена (делается на сервис аутентификации)
-```shell
-POST /login
-Content-Type: application/json
-
-{
-  "username": "admin",
-  "password": "admin"
-}
-
-
-curl -v -X POST -H "Content-Type: application/json" -d '{"username":"admin","password":"admin"}' http://localhost:9094/login
+```bash
+sh ./start-full.sh
 ```
 
-### Доступ к защищённому ресурсу
-```shell
-GET /hello
-Authorization: Bearer <токен_из_ответа>
-
-curl -v -X GET -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2MDI4NTI0MywiZXhwIjoxNzYwMjg1ODQzfQ.hYTTMsVT_2zBqNEZREcI-B73mSiqrAWZaRjZ0q0dP08" http://localhost:9094/auth
+```PowerShell
+PowerShell -file start-full.ps1
 ```
 
+---
 
-## Перед запуском необходимо добавить в `/etc/host` или `C:\Windows\System32\drivers\etc\hosts`
-```shell
+## Перед запуском приложения
+
+Перед запуском приложения по скрипту необходимо добавить в:
+- `/etc/host`
+- `C:\Windows\System32\drivers\etc\hosts`
+
+```bash
 ##
 # Host Database
 #
@@ -79,26 +49,71 @@ curl -v -X GET -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbi
 127.0.0.1 nginx-service
 ```
 
+---
+
 ## Запуск
-1. На http://nginx-service:9095 создаем пользователя.
-2. На http://nginx-service:9093 основное приложение. Логинимся и пользуемся.
 
+1. Создаем пользователя (админка): http://nginx-service:9095
+2. Логинимся и пользуемся: http://nginx-service:9093
 
-## Health-check у Keycloak-service
-> `exec 3<>/dev/tcp/localhost/9000` - это bash-специфичный способ открыть TCP-соединение с локальным хостом на порт 9000 (где работает Keycloak). Файловый дескриптор 3 открывается для чтения и записи.
+---
 
-> `echo -e 'GET /health/ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3` - отправляет HTTP-запрос типа GET на путь `/health/ready` через открытое соединение (дескриптор 3). Символы `\r\n` - обязательные для HTTP-запроса переносы строки.
+## Техинфо
 
-> `head -n 1 <&3` - читает первую строку ответа сервера (обычно это статус HTTP ответа, например, "HTTP/1.1 200 OK").
+Техническаяы информация по важным моментам в сервисах.
 
-> `grep -q '200 OK'` - проверяет, содержит ли эта строка подстроку "200 OK", что означает успешный ответ HTTP.
+### Health-check у Keycloak-service
 
+В docker-compose  присутствует проверка:
 
-```PowerShell
-PowerShell -file services-speed-test.ps1
+```bash
+  keycloak-service:
+    build:
+      context: ./keycloak-service/
+      dockerfile: Dockerfile
+    healthcheck:
+      test: [ "CMD-SHELL", "exec 3<>/dev/tcp/localhost/9000; echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3; head -n 1 <&3 | grep -q '200 OK'" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 ```
 
-```declarative
+Детальный разбор:
+
+`exec 3<>/dev/tcp/localhost/9000`
+
+> bash-специфичный способ открыть TCP-соединение с локальным хостом на порт 9000 (где работает Keycloak). Файловый дескриптор 3 открывается для чтения и записи.
+
+`echo -e 'GET /health/ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3`
+
+> Отправляет HTTP-запрос типа GET на путь `/health/ready` через открытое соединение (дескриптор 3). Символы `\r\n` - обязательные для HTTP-запроса переносы строки.
+
+`head -n 1 <&3`
+
+> читает первую строку ответа сервера (обычно это статус HTTP ответа, например, "HTTP/1.1 200 OK").
+
+`grep -q '200 OK'`
+
+> проверяет, содержит ли эта строка подстроку "200 OK", что означает успешный ответ HTTP.
+
+
+### Запуск LibreOffice в Docker
+
+```bash
+docker build -f Dockerfile-libreoffice -t libreoffice-converter .
+
+docker run --rm -v $(pwd):/data libreoffice-converter example.docx
+```
+
+
+### Jodconverter API (Swagger)
+
+http://localhost:9090/swagger-ui.html#/
+
+
+### Пример логов запуска приложения через скрипт 
+
+```
 PS C:\Users\USER\IdeaProjects\corbit> PowerShell -file services-speed-test.ps1
 [+] Running 16/16
 ✔ converter-service Pulled                                                                                                                                                                                                  43.1s
