@@ -1,7 +1,7 @@
 plugins {
-	java
-	id("org.springframework.boot") version "3.5.6"
-	id("io.spring.dependency-management") version "1.1.7"
+    java
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.dependency.management)
 }
 
 group = "ru.corthos"
@@ -9,50 +9,34 @@ version = "0.0.1"
 description = "backend-service is a service for integration with PDF converter"
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(25)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
 }
 
 configurations {
-	compileOnly {
-		extendsFrom(configurations.annotationProcessor.get())
-	}
+    compileOnly {
+        extendsFrom(configurations.annotationProcessor.get())
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation(libs.spring.boot.starter.web)
 
-	compileOnly("org.projectlombok:lombok")
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
 
-	annotationProcessor("org.projectlombok:lombok")
-
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.testcontainers:junit-jupiter:1.21.3")
-
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-
-    //	implementation("org.springframework.boot:spring-boot-starter-amqp")
-    //	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    //	implementation("org.springframework.kafka:spring-kafka")
-    //  implementation("org.apache.tika:tika-parsers-standard-package:3.2.3")
-    //	runtimeOnly("org.postgresql:postgresql")
-    //  testImplementation("org.testcontainers:testcontainers:1.21.3")
-    //	testImplementation("org.springframework.amqp:spring-rabbit-test")
-    //	testImplementation("org.springframework.kafka:spring-kafka-test")
-    //  implementation("com.github.librepdf:openpdf:3.0.0")
-    //  implementation("org.apache.poi:poi-ooxml:5.4.1")
-    //  implementation("fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter.docx.xwpf:2.1.0")
-    //  implementation("org.apache.tika:tika-core:3.2.3")
+    testImplementation(libs.spring.boot.starter.test)
+    testImplementation(libs.testcontainers.junit)
+    testImplementation(libs.junit.jupiter)
 }
 
 tasks.withType<Test> {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
