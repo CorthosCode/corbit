@@ -1,0 +1,9 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: "${BACKEND-SERVICE-FILE-SIZE:5MB}"
+      max-request-size: "${BACKEND-SERVICE-MAX-REQUEST-SIZE:5MB}"
+
+logging:
+  level:
+    org.springframework.web: DEBUG

@@ -3,29 +3,5 @@ spring:
     name: "backend-service"
   profiles:
     active: gotenberg
-  servlet:
-    multipart:
-      max-file-size: "${BACKEND-SERVICE-FILE-SIZE:5MB}"
-      max-request-size: "${BACKEND-SERVICE-MAX-REQUEST-SIZE:5MB}"
-
-logging:
-  level:
-    org.springframework.web: DEBUG
-
----
-spring:
   config:
-    activate:
-      on-profile: gotenberg
-converter:
-  service:
-    base-url: http://converter-service:3000
-
----
-spring:
-  config:
-    activate:
-      on-profile: jodconverter
-converter:
-  service:
-    base-url: http://converter-service:8080
+    import: "configserver:${BACKEND-SERVICE-CLOUD-CONFIG-URL:http://localhost:8080}"

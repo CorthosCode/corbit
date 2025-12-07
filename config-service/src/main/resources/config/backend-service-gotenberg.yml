@@ -1,0 +1,7 @@
+spring:
+  config:
+    activate:
+      on-profile: gotenberg
+converter:
+  service:
+    base-url: http://converter-service:3000

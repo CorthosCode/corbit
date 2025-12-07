@@ -1,0 +1,7 @@
+spring:
+  config:
+    activate:
+      on-profile: jodconverter
+converter:
+  service:
+    base-url: http://converter-service:8080

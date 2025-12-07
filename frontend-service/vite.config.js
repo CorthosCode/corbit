@@ -9,7 +9,7 @@ export default defineConfig({
       host: '0.0.0.0',
       proxy: {
         '/upload': {
-          target: 'http://backend:8080',
+          target: 'http://backend-service:8080',
           changeOrigin: true,
           secure: false,
         }

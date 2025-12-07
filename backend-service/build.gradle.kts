@@ -25,6 +25,9 @@ repositories {
 }
 
 dependencies {
+    implementation(platform(libs.spring.cloud.dependencies))
+    implementation(libs.spring.cloud.starter)
+
     implementation(libs.spring.boot.starter.web)
 
     compileOnly(libs.lombok)
@@ -41,7 +44,7 @@ tasks.withType<Test> {
 
 tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
     enabled = true
-    mainClass.set("ru.corthos.backend.CorbitApplication")
+    mainClass.set("ru.corthos.backend.MainApplication")
 }
 
 tasks.named<Jar>("jar") {
